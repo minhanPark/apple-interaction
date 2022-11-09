@@ -1,4 +1,8 @@
 (() => {
+  let yOffset = 0; //window.scrollY 대신 쓸  변수
+  let prevScrollHeight = 0; // 이전 스크롤들의 높이 합
+  let currentScene = 0; // 현재 활성화된(눈 앞에 보고 있는) 씬, 섹션
+
   const sceneInfo = [
     {
       // 0
@@ -46,9 +50,43 @@
         i
       ].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
     }
-    console.log(sceneInfo);
+
+    let totalScrollHeight = 0;
+    yOffset = window.screenY;
+    for (let i = 0; i < sceneInfo.length; i++) {
+      totalScrollHeight += sceneInfo[i].scrollHeight;
+      if (totalScrollHeight >= yOffset) {
+        currentScene = i;
+        break;
+      }
+    }
+    document.body.setAttribute("id", `show-scene-${currentScene}`);
+  }
+
+  function scrollLoop() {
+    prevScrollHeight = 0;
+    for (let i = 0; i < currentScene; i++) {
+      prevScrollHeight += sceneInfo[i].scrollHeight;
+    }
+
+    if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+      currentScene++;
+      document.body.setAttribute("id", `show-scene-${currentScene}`);
+    }
+
+    if (yOffset < prevScrollHeight) {
+      if (currentScene === 0) return;
+      currentScene--;
+      document.body.setAttribute("id", `show-scene-${currentScene}`);
+    }
+    //#show-scene-0
+    //document.body.setAttribute("id", `show-scene-${currentScene}`);
   }
 
   window.addEventListener("resize", setLayout);
-  setLayout();
+  window.addEventListener("scroll", () => {
+    yOffset = window.scrollY;
+    scrollLoop();
+  });
+  window.addEventListener("load", setLayout);
 })();

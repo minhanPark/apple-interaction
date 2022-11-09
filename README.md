@@ -29,3 +29,8 @@ html {
 현재 html에서 font-size는 14px이다.  
 그러면 밑에는 그 기준으로 3rem 즉 42px이 된다.  
 여기서 em으로 margin-right를 준 이유는 em은 현재 폰트 사이즈를 기준으로 잡기 때문이다. 즉 여기서 42px이 1em이 되고 여기의 0.2인 8.4가 margin-right가 된다. **즉 폰트사이즈의 비율로 너비를 주려고 할 때 이런식으로 혼합해서 사용하면된다.**
+
+### window 이벤트 load vs DomContentLoaded
+
+load는 이미지 등 리소스도 다 다운로드 받은 다음에 실행하고, DomContentLoaded는 돔이 구성되면 실행된다.
+그래서 DomContentLoaded가 실행시점은 더 빠르지만 이미지로 인터렉션이 중요하면 load가 좋음
