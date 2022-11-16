@@ -47,3 +47,33 @@ load는 이미지 등 리소스도 다 다운로드 받은 다음에 실행하�
 ### 고화질 비디오 부드럽게 처리하기
 
 이미지를 로드한 후 캔버스에 이미지를 그리면 된다. 애플에서도 이런식으로 캔버스를 활용한다.
+
+### canvas로 이미지 그리기
+
+```js
+objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+```
+
+크기 맞춰서 위와 같이 그리면 됨.
+
+캔버스 크기를 조정하는 방법은 2가지가 있음. 1개는 캔버스의 width, height를 자바스크립트로 수정하는 것이 있음. 이때는 캔버스가 가진 픽셀수 자체를 바꾸는 것이고, 하나는 css로 해서 scale로 수정하는 것이 있다. 여기서는 스케일로 수정했음(애플도 이렇게 했다고 하고, 성능에 좀 더 도움이 된다고 한다.)
+
+```css
+.sticky-elem-canvas {
+  top: 0;
+  height: 100%;
+}
+
+.sticky-elem-canvas canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+```
+
+```js
+const heightRatio = window.innerHeight / 1080;
+sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
+```
+
+높이 비율을 맞춘다음 캔버스를 채운다.

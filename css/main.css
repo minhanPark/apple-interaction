@@ -28,6 +28,7 @@ a {
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 10;
 }
 
 .local-nav {
@@ -38,6 +39,7 @@ a {
   height: 52px;
   border-bottom: 1px solid #ddd;
   padding: 0 1rem;
+  z-index: 11;
 }
 
 .global-nav-links,
@@ -73,6 +75,9 @@ a {
 }
 
 #scroll-section-0 h1 {
+  position: relative;
+  top: -10vh;
+  z-index: 5;
   font-size: 4rem;
   text-align: center;
   font-weight: bold;
@@ -123,6 +128,7 @@ a {
 .desc-message {
   width: 50%;
   font-weight: bold;
+  opacity: 0;
 }
 
 .pin {
@@ -186,6 +192,18 @@ a {
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
 }
+
+.sticky-elem-canvas {
+  top: 0;
+  height: 100%;
+}
+
+.sticky-elem-canvas canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 @media (min-width: 1024px) {
   #scroll-section-0 h1 {
     font-size: 9vw;
