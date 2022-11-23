@@ -77,3 +77,11 @@ sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${h
 ```
 
 높이 비율을 맞춘다음 캔버스를 채운다.
+
+### getBoundingClientRect
+
+getBoundingClientRect 메소드는 해당 dom의 width, height, left, top, right, botton, x, y를 알려주며 width와 height는 뷰포트의 왼쪽 상단을 기준으로 한다.
+
+### objs.canvas.offsetTop
+
+offsetTop은 getBoundingClientRect처럼 스크롤에 따라서 영향을 받는것이 아니라 고정되어 있음. 그리고 부모 요소로부터 기준을 삼는데, 정확히 사용하려면 부모 요소의 포지션을 relative로 바꿔줘야함
