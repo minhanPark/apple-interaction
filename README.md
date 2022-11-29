@@ -85,3 +85,31 @@ getBoundingClientRect 메소드는 해당 dom의 width, height, left, top, right
 ### objs.canvas.offsetTop
 
 offsetTop은 getBoundingClientRect처럼 스크롤에 따라서 영향을 받는것이 아니라 고정되어 있음. 그리고 부모 요소로부터 기준을 삼는데, 정확히 사용하려면 부모 요소의 포지션을 relative로 바꿔줘야함
+
+### 부드러운 감속의 원리
+
+acc를 0.1로 잡았을 때
+현재지점 = 현재지점 + (목표지점 - 현재지점) \* acc 를 반복한다.  
+그리고 requestAnimationFrame을 계속 반복 시킨다.  
+목표지점과 현재지점의 차이가 1(바뀔 수 있음) 미만 차이가 나면 애니메이션을 멈춰주면 된다.
+
+### orientationchange
+
+```js
+window.addEventListener("orientationchange", setLayout);
+```
+
+이벤트 중에 orientationchange는 폰을 가로 세로 전환할 때 발생하는 이벤트다.
+
+### stroke 길이
+
+```css
+stroke-dasharray: 100;
+```
+
+svg에 stroke-dasharray을 주면 선을 dash 형태로 그릴 수 있다.  
+직접 보고 선을 다 그릴려면 몇 인지도 알 수 있고, 자바스크립트로 접근하려면 아래처럼 하면 된다.
+
+```js
+document.querySelector("svg").getTotalLength();
+```
