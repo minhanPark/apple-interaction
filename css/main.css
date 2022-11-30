@@ -21,6 +21,15 @@ a {
   text-decoration: none;
 }
 
+body.before-load {
+  overflow: hidden;
+}
+
+.container {
+  /* iphone 등에서 가로 스크롤 방지 */
+  overflow-x: hidden;
+}
+
 .global-nav {
   height: 44px;
   padding: 0 1rem;
@@ -172,7 +181,7 @@ a {
   font-size: 1.2rem;
   color: #888;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: -24rem auto;
 }
 
 .footer {
@@ -198,6 +207,11 @@ a {
 #show-scene-2 #scroll-section-2 .sticky-elem,
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
+  will-change: transform, opacity;
+}
+
+.scroll-effect-end .sticky-elem {
+  display: none !important;
 }
 
 .sticky-elem-canvas {
@@ -262,6 +276,12 @@ a {
   }
 }
 
+.before-load .container {
+  /* 높이를 js로 변환시키는 것과 기본적으로 가지고 있는 애들 섞여있다보니 처음에 
+ 로딩 시 스크롤이 움직이는 에러가 나서 해당 부분을 추가 */
+  display: none;
+}
+
 .before-load .loading {
   opacity: 1;
 }
@@ -273,6 +293,10 @@ a {
   stroke-dashoffset: 157;
   fill: transparent;
   animation: loading-circle-ani 1s infinite;
+}
+
+.normal-content {
+  margin-bottom: 10rem;
 }
 
 @media (min-width: 1024px) {
@@ -321,5 +345,7 @@ a {
 
   .canvas-caption {
     font-size: 2rem;
+    padding: 0;
+    margin-top: -8rem;
   }
 }

@@ -608,11 +608,25 @@
     }
 
     if (
+      delayedYOffset <
+      prevScrollHeight + sceneInfo[currentScene].scrollHeight
+    ) {
+      document.body.classList.remove("scroll-effect-end");
+    }
+
+    if (
       delayedYOffset >
       prevScrollHeight + sceneInfo[currentScene].scrollHeight
     ) {
       enterNewScene = true;
-      currentScene++;
+
+      if (currentScene === sceneInfo.length - 1) {
+        document.body.classList.add("scroll-effect-end");
+      }
+
+      if (currentScene < sceneInfo.length - 1) {
+        currentScene++;
+      }
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
 
@@ -653,27 +667,44 @@
     }
   }
 
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 900) {
-      setLayout();
-    }
-    sceneInfo[3].values.rectStartY = 0;
-  });
-  window.addEventListener("orientationchange", setLayout);
-  window.addEventListener("scroll", () => {
-    yOffset = window.scrollY;
-    scrollLoop();
-    checkMenu();
-
-    if (!rafState) {
-      rafId = requestAnimationFrame(loop);
-      rafState = true;
-    }
-  });
   window.addEventListener("load", () => {
     document.body.classList.remove("before-load");
     setLayout();
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+
+    let tempYoffset = yOffset;
+    let tempScrollCount = 0;
+
+    if (yOffset > 0) {
+      let siId = setInterval(() => {
+        window.scrollTo(0, tempYoffset);
+        tempYoffset += 5;
+        if (tempScrollCount > 20) {
+          clearInterval(siId);
+        }
+        tempScrollCount++;
+      }, 20);
+    }
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) {
+        setLayout();
+        sceneInfo[3].values.rectStartY = 0;
+      }
+    });
+
+    window.addEventListener("orientationchange", setLayout);
+
+    window.addEventListener("scroll", () => {
+      yOffset = window.scrollY;
+      scrollLoop();
+      checkMenu();
+
+      if (!rafState) {
+        rafId = requestAnimationFrame(loop);
+        rafState = true;
+      }
+    });
   });
   document.querySelector(".loading").addEventListener("transitionend", (e) => {
     document.body.removeChild(e.currentTarget);
